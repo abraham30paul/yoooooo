@@ -3,7 +3,7 @@
 <head>
   <title>Abraham Portfolio</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
   <style>
     body {
@@ -59,7 +59,9 @@
 </div>
 
 <script>
-  const supabase = window.supabase.createClient(
+  const { createClient } = supabase;
+
+  const supabaseClient = createClient(
     "https://qsvluibgxguzkiycndhx.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzdmx1aWJneGd1emtpeWNuZGh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNDM2NDcsImV4cCI6MjA4NzcxOTY0N30.h5NWRVcOQ97gLTF55IZnV2bqdOre6gu9BdtrJSjA7Zs"
   );
@@ -72,7 +74,7 @@
       const email = document.getElementById("email").value;
       const message = document.getElementById("message").value;
 
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from("feedback")
         .insert([{ name, email, message }]);
 
@@ -89,4 +91,5 @@
 </script>
 
 </body>
+
 </html>
