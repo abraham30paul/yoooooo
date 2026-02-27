@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Abraham Portfolio</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: linear-gradient(135deg, #4e73df, #1cc88a);
+      color: white;
+      text-align: center;
+    }
+
+    .container {
+      padding: 60px;
+    }
+
+    input, textarea {
+      width: 300px;
+      padding: 10px;
+      margin: 10px;
+      border: none;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background: black;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #333;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Hi, I'm Abraham 👋</h1>
+  <p>BCA Cloud Computing Student</p>
+
+  <h2>Send Feedback</h2>
+
+  <form id="feedbackForm">
+    <input type="text" id="name" placeholder="Your Name" required><br>
+    <input type="email" id="email" placeholder="Your Email" required><br>
+    <textarea id="message" placeholder="Your Message" required></textarea><br>
+    <button type="submit">Send</button>
+  </form>
+
+  <p id="responseMessage"></p>
+</div>
+
+<script>
+  const supabase = window.supabase.createClient(
+    "https://qsvluibgxguzkiycndhx.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFzdmx1aWJneGd1emtpeWNuZGh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIxNDM2NDcsImV4cCI6MjA4NzcxOTY0N30.h5NWRVcOQ97gLTF55IZnV2bqdOre6gu9BdtrJSjA7Zs"
+  );
+
+  document.getElementById("feedbackForm")
+    .addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
+
+      const { data, error } = await supabase
+        .from("feedback")
+        .insert([{ name, email, message }]);
+
+      if (error) {
+        document.getElementById("responseMessage").innerText =
+          "Error sending feedback";
+        console.log(error);
+      } else {
+        document.getElementById("responseMessage").innerText =
+          "Feedback sent successfully!";
+        document.getElementById("feedbackForm").reset();
+      }
+    });
+</script>
+
+</body>
+</html>
